@@ -1,0 +1,165 @@
+
+<!-- saved from url=(0049)http://www.cs.gmu.edu/~kdobolyi/cs211/P3/PP3.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<title>
+			CS211 — Programming Project 3
+		</title>
+	<link href="chrome-extension://lnkdbjbjpnpjeciipoaflmpcddinpjjp/mytube.css" rel="stylesheet" type="text/css"><script src="chrome-extension://lnkdbjbjpnpjeciipoaflmpcddinpjjp/mutationObserver.js"></script><script src="chrome-extension://lnkdbjbjpnpjeciipoaflmpcddinpjjp/mytube.js"></script></head>
+	<body>
+		<table align="center" bgcolor="#99CCFF">
+			<tbody><tr><td><font size="+3">Programming Project 3</font></td></tr>
+		</tbody></table>
+		<br>
+		This semester you will be writing a program that is able to process product orders from an Amazon-like website. In particular, you will be writing code that will be able to validate data entered by a user into a form used to place a product order or review. Web forms are used to collect information from customers:<br>
+		<br>
+		<table>
+			<tbody><tr>
+				<td>First name: <input type="text"></td>
+			</tr>
+			<tr>
+				<td>Last name: <input type="text"></td>
+			</tr>
+				<tr><td>Phone number: <input type="text" value="555-555-5555"></td>
+			</tr>
+		</tbody></table>
+		<br>
+		For example, in the form above, the user could enter some personal information, to be combined with details of their order or review. Unfortunately, collecting information through an open channel such as a browser is a dangerous undertaking. It is possible that a malicious user might enter particular characters that could result in gaining access to databases or other parts of the server system, through various <a href="http://en.wikipedia.org/wiki/Code_injection">code injections</a> or other attacks. For this reason, we are tasked with writing a program that will first sanitize the input collected from the user, and then store the records locally for searching and traversal.
+		<hr>
+		<font color="red"><strong>
+			PROJECT UPDATES AND CLARIFICATIONS<br>
+			<ul>
+				<li>Thursday Oct 9: names are made of letters, not characters.</li>
+			</ul>
+		</strong></font>
+		<hr>
+		This second assignment will ask you to write some code that will help you to validate user-entered data. 	
+		You will have to do three things for this assignment:<br>
+		<ul>
+			<li>Write test cases for the <code>OrderForm</code> and <code>Item</code> classes</li>
+			<li>Write code for the new <code>OrderForm</code> methods</li>
+			<li>Write code for the <code>Item</code> class</li>
+		</ul>
+		<br>
+		<hr>
+		<font size="+2"><b>Writing Test Cases</b></font><br>
+		<br>You will write test cases for a class called <code>OrderForm</code> that will be responsible for the following new functionality:<br>
+		<br>
+		<table border="1" cellpadding="2" cellspacing="2">
+			<tbody><tr>
+				<td colspan="2">
+					<b>class <code>OrderForm</code></b>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Attributes:<br>
+					These can be stored as any type, but make sure your code is compatible with the methods below.
+				</td>
+				<td>
+					<ul>
+						<li>the list of items ordered should now be stored as an <code>ArrayList</code></li>
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<td>Methods</td>
+				<td>
+					<ul>
+						<li>The constructors should initialize the collection of items to an empty list.</li>
+						<li>Update getters and setters appropriately.</li>
+						<li>A method called <code>clean</code> that takes a <code>String</code> as an argument and sets the first name, last name, and phone number of the object to whatever it can mine from the incoming string according to this pattern: the string contains a first name which must consist of at least one letter, that starts with an uppercase letter, <del>followed eventually by a space,</del> followed by a last name which must consist of at least one letter, that starts with an uppercase letter, <del>followed eventually by a space,</del> followed eventually by a phone number. If there are multiple potential first and last names in the string, it uses the pair of valid first and last name that are closest to each other and the phone number.<br>
+						The phone number consists ten digits; they can be preceded by, or followed by, anything. When there are more than ten potential numbers to choose from for the phone number (recall, the phone number must come after the names), the last ten numbers, closet to the end of the input string, are considered the phone number. <br>
+						The <code>clean</code> method will assign the three attributes of the object to the values derived from the incoming string. It will store the phone number as <code>(XXX) XXX-XXXX</code> regardless of the incoming formatting (each X is a digit).</li>
+						<li>The <code>addItem</code>  should be updated to only add an item if it is considered valid (see the <code>Item</code> class below).</li>
+					</ul>
+				</td>
+			</tr>
+		</tbody></table>
+		<br>
+		<br>
+		<table border="1" cellpadding="2" cellspacing="2">
+			<tbody><tr>
+				<td colspan="2">
+					<b>class <code>Item</code></b>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Attributes:<br>
+					These can be stored as any type, but make sure your code is compatible with the methods below.
+				</td>
+				<td>
+					<ul>
+						<li>item name</li>
+						<li>price</li>
+						<li>quantity</li>
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<td>Methods</td>
+				<td>
+					<ul>
+						<li>A constructor that takes as arguments for all three attributes and sets them to the incoming values.</li>
+						<li>Getters and setters for all attributes.</li>
+						<li>A method called <code>isValid</code> that returns true if the price is non-negative, the name is at least one character, and the quantity is a natural number.</li>
+					</ul>
+				</td>
+			</tr>
+		</tbody></table>
+		<br>		
+		Ideally, you should <b>write your test cases before you write your code</b>. In doing so, your test cases will all initially fail (because you haven't written any code), but that's fine. Now you should be ready to write test cases for your code, once you understand what arguments each function is expecting, and what it will return and when. For this project, we will expect your test cases to be written to a file called <a href="http://www.cs.gmu.edu/~kdobolyi/cs211/P3/Tests.java">Tests.java</a> (right mouse click and save the file). The example shows you three example tests for the class; <b>each test case must terminate with the comment <code>//end test</code> directly after the closing brace</b>.
+		<br>
+		Your test cases will be graded on Marmoset. In order to be compatible with Marmoset, please use the following <a href="http://www.cs.gmu.edu/~kdobolyi/cs211/P3/MakeCleaned.class">MakeCleaned.class</a> file to convert your <code>Tests.java</code> into the six cleaned files Marmoset needs in order to run your test cases (right mouse click and save the file under that name). If you prefer the source code of the file, it is <a href="http://www.cs.gmu.edu/~kdobolyi/cs211/P3/MakeCleaned.java">here</a>. Run the code in the same directory as your tests with the commands:<br>
+		<br>
+		<code>java MakeCleaned</code><br>
+		<code>jar -cvf tests.jar *</code><br>
+		<br>
+		You can then submit the file <code>tests.jar</code> to Marmoset (you can also submit all six files manually, but this takes longer). If you would like to make changes to your tests and resubmit to Marmoset, you will need to re-run the two commands above and resubmit the newer file(s) generated. See the instructions below for submitting your tests to Marmoset.<br>
+		<br>
+		<hr>
+		<b><font size="+2">Writing Code</font></b><br>
+		<br>
+		Now that you have written tests, you may begin to implement code for this project. You can and should run the test cases you have written against your code using Eclipse. Once you have passed all your tests at home, it is time to submit your code to Marmoset. See the instructions below for submitting to Marmoset.
+		<hr>
+		<b><font size="+2">Sample Input and Output</font></b><br>
+		<br>
+		Your code will be tested on Marmoset in the same manner as your test cases. Two sample tests have been provided in the <code>Tests.java</code> above: these tests are the <i>Public Tests</i> on Marmoset.
+		<hr>
+		<b><font size="+2">Project Hints and Guidelines</font></b><br>
+		<br>
+		Remember, when designing your own test cases, try to do so in a thoughtful and structured approach, as we have done in class. <br>
+		<br>
+		Other hints and guidelines:
+		<ul>
+			<li>We will be testing your code on other inputs besides the ones in the sample test file. For each
+			such test case, your code MUST pass on Marmoset in order to be considered for credit. Otherwise you will receive a zero on that test case.
+			Note that if you have a typo (and you don't upload to Marmoset, which would reveal such an error), you will probably fail every test case due to such a formatting error. Under no circumstances will such projects
+			be considered for regrading or additional credit, so make sure your code passes the test cases on Marmoset.</li>
+		</ul>
+		<hr>
+		<b><font size="+2">Project Grading</font></b><br>
+		<br>
+		The project will be worth 100 points:<br>
+		<ul>
+
+			<li>We will be testing your test suite on Marmoset first. There will be eleven such test cases, worth 20 points total. The first test case is worth 10 points and will run your tests on a canonical implementation of the project (i.e. the professor's solution): your tests must all pass on this canonical solution. The second five test cases are worth 2 points each, and will run your tests on a broken implementation of the project (i.e. one with known faults). Although this may sound difficult at first, if you follow a disciplined, structured approach to writing your test cases, you will be able to create the same test cases the professor has: essentially we are asking you to write the tests that Marmoset is actually using in the bullet above.</li>
+			<li>We will also test your code (different than your test cases), second. There will be 2 public test cases, each worth 5 points.</li>
+			<li>We will also test your code (different than your test cases), second. There will be 16 release test cases, each worth four or five points, for a total of 70 points.</li>			
+		</ul><mytubeelement id="myTubeRelayElementToPage" event="preferencesUpdated" data="{&quot;bundle&quot;:{&quot;label_delimitor&quot;:&quot;:&quot;,&quot;percentage&quot;:&quot;%&quot;,&quot;smart_buffer&quot;:&quot;Smart Buffer&quot;,&quot;start_playing_when_buffered&quot;:&quot;Start playing when buffered&quot;,&quot;sound&quot;:&quot;Sound&quot;,&quot;desktop_notification&quot;:&quot;Desktop Notification&quot;,&quot;continuation_on_next_line&quot;:&quot;-&quot;,&quot;loop&quot;:&quot;Loop&quot;,&quot;only_notify&quot;:&quot;Only Notify&quot;,&quot;estimated_time&quot;:&quot;Estimated Time&quot;,&quot;global_preferences&quot;:&quot;Global Preferences&quot;,&quot;no_notification_supported_on_your_browser&quot;:&quot;No notification style supported on your browser version&quot;,&quot;video_buffered&quot;:&quot;Video Buffered&quot;,&quot;buffered&quot;:&quot;Buffered&quot;,&quot;hyphen&quot;:&quot;-&quot;,&quot;buffered_message&quot;:&quot;The video has been buffered as requested and is ready to play.&quot;,&quot;not_supported&quot;:&quot;Not Supported&quot;,&quot;on&quot;:&quot;On&quot;,&quot;off&quot;:&quot;Off&quot;,&quot;click_to_enable_for_this_site&quot;:&quot;Click to enable for this site&quot;,&quot;desktop_notification_denied&quot;:&quot;You have denied permission for desktop notification for this site&quot;,&quot;notification_status_delimitor&quot;:&quot;;&quot;,&quot;error&quot;:&quot;Error&quot;,&quot;adblock_interferance_message&quot;:&quot;Adblock (or similar extension) is known to interfere with SmartVideo. Please add this url to adblock whitelist.&quot;,&quot;calculating&quot;:&quot;Calculating&quot;,&quot;waiting&quot;:&quot;Waiting&quot;,&quot;will_start_buffering_when_initialized&quot;:&quot;Will start buffering when initialized&quot;,&quot;will_start_playing_when_initialized&quot;:&quot;Will start playing when initialized&quot;,&quot;completed&quot;:&quot;Completed&quot;,&quot;buffering_stalled&quot;:&quot;Buffering is stalled. Will stop.&quot;,&quot;stopped&quot;:&quot;Stopped&quot;,&quot;hr&quot;:&quot;Hr&quot;,&quot;min&quot;:&quot;Min&quot;,&quot;sec&quot;:&quot;Sec&quot;,&quot;any_moment&quot;:&quot;Any Moment&quot;,&quot;popup_donate_to&quot;:&quot;Donate to&quot;,&quot;extension_id&quot;:&quot;lnkdbjbjpnpjeciipoaflmpcddinpjjp&quot;},&quot;prefs&quot;:{&quot;desktopNotification&quot;:true,&quot;soundNotification&quot;:false,&quot;logLevel&quot;:0,&quot;enable&quot;:true,&quot;loop&quot;:false,&quot;hidePopup&quot;:false,&quot;autoPlay&quot;:false,&quot;autoBuffer&quot;:true,&quot;autoPlayOnBuffer&quot;:false,&quot;autoPlayOnBufferPercentage&quot;:42,&quot;autoPlayOnSmartBuffer&quot;:true,&quot;quality&quot;:&quot;default&quot;,&quot;fshd&quot;:true,&quot;onlyNotification&quot;:false,&quot;enableFullScreen&quot;:true,&quot;saveBandwidth&quot;:false,&quot;hideAnnotations&quot;:false,&quot;turnOffPagedBuffering&quot;:false}}"></mytubeelement><mytubeelement id="myTubeRelayElementToTab" event="relayPrefs" data="{&quot;loadBundle&quot;:true}"></mytubeelement>
+		<hr>
+		<b><font size="+2">Project Submission</font></b><br>
+		<br>
+		<b>There are two due dates for the two different parts of the project (test cases and code).</b> Once a due date passes you cannot resubmit that part of the assignment. However, you may submit either or part of both assignments before the first due date, if you are done early.<br>
+		<br>
+		DUE DATE 1: Friday 9/FIXME/2014 at 4:55pm: Test cases due. Submit your <code>tests.jar</code> file on Marmoset following the link to CS112-2T. (The T stands for TEST)<br>
+		<br>
+		DUE DATE 2: Friday 9/FIXME/2014 at 4:55pm: Submit ONLY your <code>OrderForm.java</code> and <code>Item.java</code> files on Marmoset following the link to CS112-2C. (the C stands for CODE). Once you pass all the public tests, use your tokens wisely to start examining the release tests. Do not change the name of the files.<br>
+		<br>
+		You may make as many submissions to Marmoset as you like, before the due date, but we will only grade the highest score. Remember to read and adhere to all of the information regarding projects and their submission and grading on the course syllabus.<br>
+		<br>
+		Allowable resources: Professor and GTA, the Java standard library documentation for classes discussed in lecture. You may not look at or share other students' code in any manner. 
+		You may not look at or share test cases with other students. You may NOT work together or talk to other people (including outside sources 
+		besides the professor and GTA/UTAs) about the project. All work must be your own.<br>
+	
+</body></html>
